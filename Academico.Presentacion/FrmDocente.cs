@@ -35,10 +35,26 @@ namespace Academico.Presentacion
             txtFechaHora.Text = fechaHoraFormateada;
         }
 
-        void Limpiar()
+        void Limpiar(Control control)
         {
-            foreach (Control c in Controls)
-                c.Text = "";
+            foreach (Control c in control.Controls)
+            {
+                // Si el control actual es un TextBox, establece su texto en una cadena vacía.
+                if (c is TextBox)
+                {
+                    TextBox textBox = (TextBox)c;
+                    textBox.Text = "";
+                }
+                else if (c is CheckBox checkBox)
+                {
+                    checkBox.Checked = false;
+                }
+                // Si el control actual es un panel u otro contenedor, llama recursivamente a Limpiar().
+                else if (c.HasChildren)
+                {
+                    Limpiar(c);
+                }
+            }
         }
         bool Validar(string p1, string p2, string p3, string p4, string p5, string p6)
         {
@@ -128,9 +144,9 @@ namespace Academico.Presentacion
                 objDocente = objNegocio.BuscarD(Convert.ToInt32(txtId.Text));
                 objDocente.Num_doc = txtNum_Doc.Text;
                 objDocente.Nombre = txtNombre.Text;
-                objDocente.Apellido = txtNombre.Text;
+                objDocente.Apellido = txtApellido.Text;
                 objDocente.Email = txtEmail.Text;
-                objDocente.Telefono = txtNombre.Text;
+                objDocente.Telefono = txtTelefono.Text;
 
                 DateTime HoraActual = DateTime.Now;
 
@@ -156,6 +172,11 @@ namespace Academico.Presentacion
         private void FrmDocente_FormClosed_1(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            Limpiar(this);
         }
     }
 }

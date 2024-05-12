@@ -26,10 +26,26 @@ namespace Academico.Presentacion
 
         }
 
-        void Limpiar()
+        void Limpiar(Control control)
         {
-            foreach (Control c in Controls)
-                c.Text = "";
+            foreach (Control c in control.Controls)
+            {
+                // Si el control actual es un TextBox, establece su texto en una cadena vacía.
+                if (c is TextBox)
+                {
+                    TextBox textBox = (TextBox)c;
+                    textBox.Text = "";
+                }
+                else if (c is CheckBox checkBox)
+                {
+                    checkBox.Checked = false;
+                }
+                // Si el control actual es un panel u otro contenedor, llama recursivamente a Limpiar().
+                else if (c.HasChildren)
+                {
+                    Limpiar(c);
+                }
+            }
         }
         bool Validar(String p1,string p2, String p3)
         {
@@ -129,6 +145,11 @@ namespace Academico.Presentacion
         private void FrmEstudiante_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            Limpiar(this);
         }
     }
 }
