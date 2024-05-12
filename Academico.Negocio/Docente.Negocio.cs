@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Academico.Negocio
 {
-    public class Docente : IDocenteRepositorio
+    public class DocenteNegocio : IDocenteRepositorio
     {
 		AcademicoContextoBD db = new AcademicoContextoBD();
 

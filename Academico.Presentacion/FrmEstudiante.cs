@@ -117,6 +117,18 @@ namespace Academico.Presentacion
             }
             
         }
-        
+
+        private void btnDocente_Click(object sender, EventArgs e)
+        {
+            FrmDocente formularioD = new FrmDocente();
+            formularioD.Show();
+
+            this.Hide();
+        }
+
+        private void FrmEstudiante_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
